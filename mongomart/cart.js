@@ -38,32 +38,19 @@ function CartDAO(database) {
         *
         */
 
-        // var userCart = {
-        //     userId: userId,
-        //     items: []
-        // }
-
         var userCart = this.db.collection('cart').findOne({userId: userId}, function(err, userCart){
           assert.equal(err, null);
           console.log(userCart);
           callback(userCart);
         });
 
-
-        // var dummyItem = this.createDummyItem();
-        // userCart.items.push(dummyItem);
-
         // TODO-lab5 Replace all code above (in this method).
 
         // TODO Include the following line in the appropriate
         // place within your code to pass the userCart to the
         // callback.
-        // callback(userCart);
     }
 
-
-    this.itemInCart = function(userId, itemId, callback) {
-        "use strict";
 
         /*
          *
@@ -90,10 +77,40 @@ function CartDAO(database) {
          *
          */
 
-        callback(null);
+     this.itemInCart = function(userId, itemId, callback) {
+         "use strict";
+        this.db.collection('cart')
+          .find({userId: userId, "items._id": itemId}, {"items.$": 1})
+            .limit(1)
+            .next(function(err, item){
+              assert.equal(null, err);
+              console.log(err);
+              if (item != null) {
+                item = item.items[0];
+              }
+              console.log(item);
+              callback(item);
+            });
+
+         // Rather than using next() this could be implemented with
+         // toArray() and a callback function that expects an array
+         // of items and uses array indexing to access the first item.
+        //  this.db.collection("cart")
+        //      .find({userId: userId, "items._id": itemId}, {"items.$": 1})
+        //      .limit(1)
+        //      .next(function(err, item) {
+        //          assert.equal(null, err);
+        //          console.log(err);
+        //          if (item != null) {
+        //              item = item.items[0];
+        //          }
+        //          console.log(item);
+        //          callback(item);
+        //      });
+     }
+
 
         // TODO-lab6 Replace all code above (in this method).
-    }
 
 
     /*
@@ -162,9 +179,6 @@ function CartDAO(database) {
     };
 
 
-    this.updateQuantity = function(userId, itemId, quantity, callback) {
-        "use strict";
-
         /*
         * TODO-lab7
         *
@@ -182,18 +196,32 @@ function CartDAO(database) {
         *
         */
 
-        var userCart = {
-            userId: userId,
-            items: []
+    this.updateQuantity = function(userId, itemId, quantity, callback) {
+        "use strict";
+
+        var updateDoc = {};
+
+        if (quantity == 0) {
+            updateDoc = { "$pull": { items: { _id: itemId } } };
+        } else {
+            updateDoc = { "$set": { "items.$.quantity": quantity } };
         }
-        var dummyItem = this.createDummyItem();
-        dummyItem.quantity = quantity;
-        userCart.items.push(dummyItem);
-        callback(userCart);
+
+        this.db.collection("cart").findOneAndUpdate(
+            { userId: userId,
+              "items._id": itemId },
+            updateDoc,
+            { returnOriginal: false },
+            function(err, result) {
+                assert.equal(null, err);
+                console.log(result.value);
+                callback(result.value);
+            });
+
+    }
 
         // TODO-lab7 Replace all code above (in this method).
 
-    }
 
     this.createDummyItem = function() {
         "use strict";

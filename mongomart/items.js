@@ -79,7 +79,6 @@ function ItemDAO(database) {
         // TODO Include the following line in the appropriate
         // place within your code to pass the categories array to the
         // callback.
-        // callback(categories);
     }
 
 
@@ -107,10 +106,6 @@ function ItemDAO(database) {
          * than you do for other categories.
          *
          */
-         //{page: page > 0 ? (page * 5) : 0 }
-        //  console.log(category);
-        //  console.log(page);
-        //  console.log(itemsPerPage);
         var filter = (category !== 'All') ? {"category": category} : {};
 
         this.db.collection('item').find(filter)
@@ -119,38 +114,19 @@ function ItemDAO(database) {
           .skip(page > 0 ? (page * 5) : 0)
           .toArray(function(err, pageItems){
             assert.equal(err, null);
-            // console.log(pageItems);
             callback(pageItems);
           });
-
-        // var pageItem = this.createDummyItem();
-        // var pageItems = [];
-        // for (var i=0; i<5; i++) {
-        //     pageItems.push(pageItem);
-        // }
 
         // TODO-lab1B Replace all code above (in this method).
 
         // TODO Include the following line in the appropriate
         // place within your code to pass the items for the selected page
         // to the callback.
-        // callback(pageItems);
     }
 
 
     this.getNumItems = function(category, callback) {
         "use strict";
-
-        var numItems = 0;
-        var filter = (category !== 'All') ? {"category": category} : {};
-
-        this.db.collection('item').find(filter)
-          .count(function(err, numItems){
-            assert.equal(err, null);
-            console.log(numItems);
-            callback(numItems);
-          });
-
         /*
          * TODO-lab1C:
          *
@@ -166,9 +142,17 @@ function ItemDAO(database) {
          *
          */
 
+             var numItems = 0;
+             var filter = (category !== 'All') ? {"category": category} : {};
+
+             this.db.collection('item').find(filter)
+               .count(function(err, numItems){
+                 assert.equal(err, null);
+                 console.log(numItems);
+                 callback(numItems);
+               });
          // TODO Include the following line in the appropriate
          // place within your code to pass the count to the callback.
-        // callback(numItems);
     }
 
 
@@ -211,34 +195,17 @@ function ItemDAO(database) {
             callback(items);
           });
 
-        // var item = this.createDummyItem();
-        // var items = [];
-        // for (var i=0; i<5; i++) {
-        //     items.push(item);
-        // }
-
         // TODO-lab2A Replace all code above (in this method).
 
         // TODO Include the following line in the appropriate
         // place within your code to pass the items for the selected page
         // of search results to the callback.
-        // callback(items);
     }
 
 
     this.getNumSearchItems = function(query, callback) {
         "use strict";
 
-        var numItems = 0;
-        // var filter = (query !== "") ? {"query": query} : {};
-        this.db.collection('item').find({
-          $text: {$search: query}
-        })
-          .count(function(err, numItems){
-            assert.equal(err, null);
-            console.log(numItems);
-            callback(numItems);
-          })
         /*
         * TODO-lab2B
         *
@@ -251,8 +218,15 @@ function ItemDAO(database) {
         * a SINGLE text index on title, slogan, and description. You should
         * simply do this in the mongo shell.
         */
-
-        // callback(numItems);
+        var numItems = 0;
+        this.db.collection('item').find({
+          $text: {$search: query}
+        })
+          .count(function(err, numItems){
+            assert.equal(err, null);
+            console.log(numItems);
+            callback(numItems);
+          })
     }
 
 
@@ -275,14 +249,11 @@ function ItemDAO(database) {
           callback(item);
         });
 
-        // var item = this.createDummyItem();
-
         // TODO-lab3 Replace all code above (in this method).
 
         // TODO Include the following line in the appropriate
         // place within your code to pass the matching item
         // to the callback.
-        // callback(item);
     }
 
 
@@ -322,8 +293,6 @@ function ItemDAO(database) {
 
         // TODO replace the following two lines with your code that will
         // update the document with a new review.
-        // var doc = this.createDummyItem();
-        // doc.reviews = [reviewDoc];
 
         this.db.collection('item').findOneAndUpdate(
           {_id: itemId},
@@ -337,7 +306,6 @@ function ItemDAO(database) {
         // TODO Include the following line in the appropriate
         // place within your code to pass the updated doc to the
         // callback.
-        // callback(doc);
     }
 
 
