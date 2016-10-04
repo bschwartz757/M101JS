@@ -1,0 +1,15 @@
+2016-09-28T18:28:44.885-0700 I CONTROL  [initandlisten] MongoDB starting : pid=95 port=27017 dbpath=/data/rs1 64-bit host=blakes-PC
+2016-09-28T18:28:44.886-0700 I CONTROL  [initandlisten] db version v3.2.9
+2016-09-28T18:28:44.886-0700 I CONTROL  [initandlisten] git version: 22ec9e93b40c85fc7cae7d56e7d6a02fd811088c
+2016-09-28T18:28:44.886-0700 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1f 6 Jan 2014
+2016-09-28T18:28:44.886-0700 I CONTROL  [initandlisten] allocator: tcmalloc
+2016-09-28T18:28:44.886-0700 I CONTROL  [initandlisten] modules: none
+2016-09-28T18:28:44.886-0700 I CONTROL  [initandlisten] build environment:
+2016-09-28T18:28:44.886-0700 I CONTROL  [initandlisten]     distmod: ubuntu1404
+2016-09-28T18:28:44.886-0700 I CONTROL  [initandlisten]     distarch: x86_64
+2016-09-28T18:28:44.886-0700 I CONTROL  [initandlisten]     target_arch: x86_64
+2016-09-28T18:28:44.886-0700 I CONTROL  [initandlisten] options: { net: { port: 27017 }, processManagement: { fork: true }, replication: { oplogSizeMB: 128, replSet: "m101" }, storage: { dbPath: "/data/rs1", mmapv1: { smallFiles: true } }, systemLog: { destination: "file", path: "1.log" } }
+2016-09-28T18:28:44.908-0700 E NETWORK  [initandlisten] listen(): bind() failed errno:98 Address already in use for socket: 0.0.0.0:27017
+2016-09-28T18:28:44.908-0700 E NETWORK  [initandlisten]   addr already in use
+2016-09-28T18:28:44.908-0700 E STORAGE  [initandlisten] Failed to set up sockets during startup.
+2016-09-28T18:28:44.909-0700 I CONTROL  [initandlisten] dbexit:  rc: 48

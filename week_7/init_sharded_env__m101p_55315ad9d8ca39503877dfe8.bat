@@ -83,4 +83,4 @@ REM  add shards and enable sharding on the test db
 start  mongo  --eval "db.adminCommand( { addshard : 's0/'+'localhost:37017' } );db.adminCommand( { addshard : 's1/'+'localhost:47017' } );db.adminCommand( { addshard : 's2/'+'localhost:57017' } );db.adminCommand({enableSharding: 'school'});db.adminCommand({shardCollection: 'school.students', key: {student_id:1}});"
 
 
-
+/bin/bash: q: command not found
